@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>To My Crime Partner | Happy Married Life Dii</title>
-    <!-- Tailwind CSS for modern styling -->
+    <title>To My Pretty Sister | Happy Married Life Dii</title>
+    <!-- Stable Production Engine for instant compilation in editors -->
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Google Fonts for premium look -->
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Poppins', sans-serif; background-color: #fffaf0; }
         .handwritten { font-family: 'Caveat', cursive; }
-        /* Perspective style for 3D card flipping */
-        .perspective-1000 { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
+        
+        /* Mobile-Friendly 3D Flip Mechanics */
+        .perspective-1000 { perspective: 1000px; -webkit-perspective: 1000px; }
+        .preserve-3d { transform-style: preserve-3d; -webkit-transform-style: preserve-3d; transition: transform 0.6s ease-in-out; }
+        .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .rotate-y-180 { transform: rotateY(180deg); -webkit-transform: rotateY(180deg); }
     </style>
 </head>
 <body class="overflow-x-hidden">
@@ -26,63 +27,141 @@
     </audio>
 
     <!-- SECTION 1: HERO (THE UNLOCK) -->
-    <section class="min-h-screen flex flex-col justify-center items-center bg-radial from-rose-100 to-amber-50 px-4 text-center">
-        <h1 class="text-4xl md:text-6xl font-bold text-rose-800 mb-4 animate-bounce">To My Crime Partner 🫶</h1>
-        <p class="text-lg text-gray-600 max-w-md mb-8">Dii, click the magical heart below to step into a box full of your favorite memories.</p>
+    <section id="hero-section" class="min-h-screen flex flex-col justify-center items-center bg-amber-50 px-4 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold text-rose-800 mb-4">To My Pretty Sister 👑</h1>
+        <p class="text-lg text-gray-600 max-w-md mb-2 font-medium">My Personal Chef & Full-Time Drama Queen 🥞✨</p>
+        <p class="text-sm text-gray-500 max-w-xs mb-8">Dii, click the magical heart below to step into a box full of your favorite memories.</p>
         
         <!-- Interactive Unlock Button -->
-        <button onclick="unlockMemories()" class="cursor-pointer bg-rose-500 hover:bg-rose-600 text-white text-3xl p-6 rounded-full shadow-lg transition-transform hover:scale-115 active:scale-95 duration-300">
+        <button onclick="unlockMemories()" class="cursor-pointer bg-rose-500 hover:bg-rose-600 text-white text-3xl p-6 rounded-full shadow-lg transform active:scale-95 transition duration-300">
             💝
         </button>
     </section>
 
-    <!-- HIDDEN WRAPPER (Revealed on Click) -->
-    <div id="main-content" class="hidden opacity-0 transition-opacity duration-1000">
+    <!-- MAIN WRAPPER (Initially set to block but completely hidden by display property via JS) -->
+    <div id="main-content" style="display: none;">
         
         <!-- SECTION 2: TIMELINE (MEMORIES WITH INTERACTIVE FLIP) -->
         <section class="py-20 px-4 max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-12 handwritten text-5xl text-rose-700">The Journey So Far...</h2>
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-4 handwritten text-5xl text-rose-700">The Journey So Far...</h2>
+            <p class="text-xs text-center text-gray-500 mb-12">Tap any photo card to read the hidden message behind it! 😉</p>
+            
             <div class="space-y-24 relative before:absolute before:inset-0 before:left-4 md:before:left-1/2 before:w-0.5 before:bg-rose-200">
                 
-                <!-- Memory 1: Childhood (Tap to Flip) -->
+                <!-- Memory 1: Childhood -->
                 <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
                     <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-rose-500 rounded-full -translate-x-2 z-10"></div>
                     <div class="w-full md:w-[45%] pl-8 md:pl-0 perspective-1000 h-64">
-                        <!-- Card Container -->
-                        <div onclick="this.classList.toggle('rotate-y-180')" class="relative w-full h-full duration-500 preserve-3d cursor-pointer shadow-md rounded-2xl hover:shadow-xl transition-all">
-                            <!-- Front Side (Photo) -->
-                            <div class="absolute inset-0 backface-hidden bg-white p-4 rounded-2xl border border-rose-50 flex flex-col">
-                                <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium">[ Bachpan Ki Photo Here ]</div>
-                                <h3 class="font-bold text-lg text-rose-700 mt-3 flex justify-between items-center">
+                        <div onclick="toggleFlip(this)" class="flip-card-inner relative w-full h-full preserve-3d cursor-pointer shadow-md rounded-2xl bg-white">
+                            <!-- Front Side -->
+                            <div class="backface-hidden p-4 border border-rose-50 flex flex-col justify-between bg-white rounded-2xl">
+                                <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium"><div class="w-full h-40 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+    <img src="bachpan.jpg" class="w-full h-full object-cover rounded-lg" alt="Bachpan">
+</div>
+</div>
+                                <h3 class="font-bold text-base text-rose-700 mt-2 flex justify-between items-center">
                                     <span>The Golden Days 🧸</span>
-                                    <span class="text-xs bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full animate-pulse">Tap Me</span>
+                                    <span class="text-[10px] bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full">Tap Me</span>
                                 </h3>
                             </div>
-                            <!-- Back Side (Secret Message) -->
-                            <div class="absolute inset-0 bg-rose-100 p-6 rounded-2xl rotate-y-180 backface-hidden flex items-center justify-center border-2 border-rose-200 text-center">
-                                <p class="text-gray-700 text-sm md:text-base italic font-medium">"Ghar ki rani, papa ki pari, aur meri sabse pyaari (aur thodi si jhagralu) dii. Wo bachpan ki yaadein sabse best hain!"</p>
+                            <!-- Back Side -->
+                            <div class="backface-hidden bg-rose-50 p-6 rounded-2xl rotate-y-180 flex items-center justify-center border border-rose-200 text-center">
+                                <p class="text-rose-900 text-sm italic font-medium leading-relaxed">"Ghar ki rani, papa ki pari, aur meri sabse pyaari dii. Bachpan ki un yaadon se zyada keemti poori duniya mein kuch bhi nahi hai!"</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Memory 2: Growing Up / Masti (Tap to Flip) -->
+                <!-- Memory 2: Cooking & Chef Masti -->
                 <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
                     <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-rose-500 rounded-full -translate-x-2 z-10"></div>
                     <div class="w-full md:w-[45%] pl-8 md:pl-0 perspective-1000 h-64">
-                        <!-- Card Container -->
-                        <div onclick="this.classList.toggle('rotate-y-180')" class="relative w-full h-full duration-500 preserve-3d cursor-pointer shadow-md rounded-2xl hover:shadow-xl transition-all">
-                            <!-- Front Side (Photo) -->
-                            <div class="absolute inset-0 backface-hidden bg-white p-4 rounded-2xl border border-rose-50 flex flex-col">
-                                <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium">[ Siblings Masti Photo Here ]</div>
-                                <h3 class="font-bold text-lg text-rose-700 mt-3 flex justify-between items-center">
-                                    <span>Partner In Crime 🍕</span>
-                                    <span class="text-xs bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full animate-pulse">Tap Me</span>
+                        <div onclick="toggleFlip(this)" class="flip-card-inner relative w-full h-full preserve-3d cursor-pointer shadow-md rounded-2xl bg-white">
+                            <!-- Front Side -->
+                            <div class="backface-hidden p-4 border border-rose-50 flex flex-col justify-between bg-white rounded-2xl">
+                                <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium"> <div class="w-full h-40 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+    <img src="cooking.jpg" class="w-full h-full object-cover rounded-lg" alt="Cooking">
+</div> </div>
+                                <h3 class="font-bold text-base text-rose-700 mt-2 flex justify-between items-center">
+                                    <span>My Ultimate Chef 🥞</span>
+                                    <span class="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Tap Me</span>
                                 </h3>
                             </div>
-                            <!-- Back Side (Secret Message) -->
-                            <div class="absolute inset-0 bg-rose-100 p-6 rounded-2xl rotate-y-180 backface-hidden flex items-center justify-center border-2 border-rose-200 text-center">
-                                <p class="text-gray-700 text-sm md:text-base italic font-medium">"Mummy ki daant se bachana ho ya late-night maggi banani ho, aapke bina mera koi scene set nahi hota tha. I'm going to miss you so much!"</p>
+                            <!-- Back Side -->
+                            <div class="backface-hidden bg-amber-50 p-6 rounded-2xl rotate-y-180 flex items-center justify-center border border-amber-200 text-center">
+                                <p class="text-amber-900 text-sm italic font-medium leading-relaxed">"Mummy ki daant se bachana ho ya mere nakhro ke hisab se tasty veg paneer ya snacks banana—aapke jaisa personal chef koi ban hi nahi sakta! Thank you for feeding me with so much love."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Memory 3: Pure Drama Queen -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-rose-500 rounded-full -translate-x-2 z-10"></div>
+                    <div class="w-full md:w-[45%] pl-8 md:pl-0 perspective-1000 h-64">
+                        <div onclick="toggleFlip(this)" class="flip-card-inner relative w-full h-full preserve-3d cursor-pointer shadow-md rounded-2xl bg-white">
+                            <!-- Front Side -->
+                            <div class="backface-hidden p-4 border border-rose-50 flex flex-col justify-between bg-white rounded-2xl">
+                                <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium"><div class="w-full h-40 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+    <img src="drama.jpg" class="w-full h-full object-cover rounded-lg" alt="Drama">
+</div>
+</div>
+                                <h3 class="font-bold text-base text-rose-700 mt-2 flex justify-between items-center">
+                                    <span>Full-Time Drama Queen 💅</span>
+                                    <span class="text-[10px] bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full">Tap Me</span>
+                                </h3>
+                            </div>
+                            <!-- Back Side -->
+                            <div class="backface-hidden bg-rose-50 p-6 rounded-2xl rotate-y-180 flex items-center justify-center border border-rose-200 text-center">
+                                <p class="text-rose-900 text-sm italic font-medium leading-relaxed">"Aapke nakhre, wo shopping ki lambi lists aur har baat par 'mai nahi baat karungi' wala drama! Yeh sab ab jiju ko handle karna padega, par sach batau toh main bohot miss karunga."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Memory 4: Late Night Conversations -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-rose-500 rounded-full -translate-x-2 z-10"></div>
+                    <div class="w-full md:w-[45%] pl-8 md:pl-0 perspective-1000 h-64">
+                        <div onclick="toggleFlip(this)" class="flip-card-inner relative w-full h-full preserve-3d cursor-pointer shadow-md rounded-2xl bg-white">
+                            <!-- Front Side -->
+                            <div class="backface-hidden p-4 border border-rose-50 flex flex-col justify-between bg-white rounded-2xl">
+                                <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium"><div class="w-full h-40 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+    <img src="secrets.jpg" class="w-full h-full object-cover rounded-lg" alt="Secrets">
+</div>
+</div>
+                                <h3 class="font-bold text-base text-rose-700 mt-2 flex justify-between items-center">
+                                    <span>Secret Keeper 🤫</span>
+                                    <span class="text-[10px] bg-amber-100 text-amber-700 px-2 py-0.5 rounded-full">Tap Me</span>
+                                </h3>
+                            </div>
+                            <!-- Back Side -->
+                            <div class="backface-hidden bg-amber-50 p-6 rounded-2xl rotate-y-180 flex items-center justify-center border border-amber-200 text-center">
+                                <p class="text-amber-900 text-sm italic font-medium leading-relaxed">"Meri har choti badi problem ka solid solution hamesha aapke paas hota tha. Mere saare secrets apne andar chhupa kar rakhne ke liye thank you dii!"</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Memory 5: The Wedding Day Ready -->
+                <div class="relative flex flex-col md:flex-row items-center justify-between md:odd:flex-row-reverse">
+                    <div class="absolute left-4 md:left-1/2 w-4 h-4 bg-rose-500 rounded-full -translate-x-2 z-10"></div>
+                    <div class="w-full md:w-[45%] pl-8 md:pl-0 perspective-1000 h-64">
+                        <div onclick="toggleFlip(this)" class="flip-card-inner relative w-full h-full preserve-3d cursor-pointer shadow-md rounded-2xl bg-white">
+                            <!-- Front Side -->
+                            <div class="backface-hidden p-4 border border-rose-50 flex flex-col justify-between bg-white rounded-2xl">
+                                <div class="w-full h-40 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400 font-medium"><div class="w-full h-40 bg-gray-200 rounded-lg overflow-hidden flex items-center justify-center">
+    <img src="wedding.jpg" class="w-full h-full object-cover rounded-lg" alt="Wedding">
+</div>
+</div>
+                                <h3 class="font-bold text-base text-rose-700 mt-2 flex justify-between items-center">
+                                    <span>The New Beginning ✨</span>
+                                    <span class="text-[10px] bg-rose-100 text-rose-600 px-2 py-0.5 rounded-full">Tap Me</span>
+                                </h3>
+                            </div>
+                            <!-- Back Side -->
+                            <div class="backface-hidden bg-rose-50 p-6 rounded-2xl rotate-y-180 flex items-center justify-center border border-rose-200 text-center">
+                                <p class="text-rose-900 text-sm italic font-medium leading-relaxed">"Aaj aap naye safar par nikal rahi hain, aur main sabse zyada proud aur khush hoon. Hamesha aise hi muskurate rehna meri sabse pretty dii!"</p>
                             </div>
                         </div>
                     </div>
@@ -92,7 +171,7 @@
         </section>
 
         <!-- SECTION 3: THE QUIZ -->
-        <section class="bg-rose-50/50 py-16 px-4">
+        <section class="bg-amber-50/40 py-16 px-4">
             <div class="max-w-md mx-auto bg-white p-8 rounded-3xl shadow-xl border border-rose-100">
                 <h2 class="text-2xl font-bold text-center text-gray-800 mb-2">Who Knows Dii Better? 🤔</h2>
                 <p class="text-xs text-center text-gray-500 mb-6">Let's see if Dii answers this correctly!</p>
@@ -110,34 +189,141 @@
         </section>
 
         <!-- SECTION 4: THE BLESSING WALL -->
-        <section class="py-20 px-4 max-w-5xl mx-auto text-center">
+        <section class="py-20 px-4 max-w-6xl mx-auto text-center">
             <h2 class="text-3xl font-bold text-gray-800 mb-2 handwritten text-5xl text-rose-700">A Wall Full Of Love ❤️</h2>
-            <p class="text-gray-500 max-w-md mx-auto mb-12 text-sm">Messages & wishes from your favorite people across the globe!</p>
+            <p class="text-gray-500 max-w-md mx-auto mb-12 text-sm">Messages, videos & wishes from your favorite people across the globe!</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Text Wish Card Example -->
-                <div class="bg-amber-50/60 p-6 rounded-2xl shadow-sm border border-amber-100 transform rotate-1 hover:rotate-0 transition duration-300 flex flex-col justify-between">
-                    <p class="text-gray-600 italic text-sm mb-4">"Happy Married Life Rakshaa! May your new journey be filled with infinite laughter and happiness!"</p>
-                    <h4 class="font-semibold text-rose-800 text-right">- Manpreet Grewal ✨</h4>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-left">
+                
+                <!-- Video Section -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between min-h-[260px]">
+                    <div class="w-full h-40 rounded-xl overflow-hidden border border-rose-200 bg-black">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="dii-video.MP4" type="video/mp4">
+                            <source src="dii-video.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <h4 class="font-semibold text-rose-800 mt-3 text-sm text-right">~ A Special Message From Me 💝</h4>
                 </div>
 
-                <!-- VIDEO PLACEHOLDER 1 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-center items-center min-h-[220px]">
-                    <div class="w-full h-36 bg-rose-50 rounded-xl flex flex-col items-center justify-center text-rose-400 border border-dashed border-rose-200">
-                        <span class="text-2xl mb-1">📹</span>
-                        <span class="text-xs font-medium">Video Coming Soon...</span>
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between min-h-[260px]">
+                    <div class="w-full h-40 rounded-xl overflow-hidden border border-rose-200 bg-black">
+                        <video controls class="w-full h-full object-cover">
+                            <source src="sukanya-dii.MP4" type="video/mp4">
+                            <source src="sukanya-dii.mp4" type="video/mp4">
+                        </video>
                     </div>
-                    <h4 class="font-semibold text-gray-700 mt-3 text-sm">Friends Squad 💫</h4>
+                    <h4 class="font-semibold text-rose-800 mt-3 text-sm text-right">~ Sukanya Di 🎥</h4>
                 </div>
 
-                <!-- VIDEO PLACEHOLDER 2 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-center items-center min-h-[220px]">
-                    <div class="w-full h-36 bg-rose-50 rounded-xl flex flex-col items-center justify-center text-rose-400 border border-dashed border-rose-200">
-                        <span class="text-2xl mb-1">📹</span>
-                        <span class="text-xs font-medium">Video Coming Soon...</span>
-                    </div>
-                    <h4 class="font-semibold text-gray-700 mt-3 text-sm">Cousins Gang 🎸</h4>
+                <!-- Text Messages -->
+                <div class="bg-amber-50/70 p-6 rounded-2xl shadow-sm border border-amber-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        "REPLACE_THIS_TOMORROW: Mumma & Papa ka aashirwad yahan aayega jab woh bolenge."
+                    </p>
+                    <h4 class="font-semibold text-amber-900 text-right">- Mumma & Papa ❤️</h4>
                 </div>
+
+                <div class="bg-rose-50/60 p-6 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        "REPLACE_THIS_TOMORROW: Shraddha di aur Jaya di ka text message yahan insert hoga."
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Shraddha & Jaya Di 👩‍❤️‍👩</h4>
+                </div>
+
+                <div class="bg-amber-50/60 p-6 rounded-2xl shadow-sm border border-amber-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        Best wishes to My Favourite Sali *Raksha* jii the Beautiful And prettiest Bride to be ..
+May your new journey be full of Happiness 😊
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Alok Jijaji 🎩</h4>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        Oye Mrs. Hone Wali..🤭💍
+
+Finally, koi mil hi gaya jo tumhari nonstop bakbak, nakhre aur drama lifetime ke liye jhelne ko ready ho gaya..😂❤️
+
+Shaadi ki bahut bahut badhai❤️❤️ Ab "single life" ko bye bolo aur "haan ji, theek hai ji" wali life mein welcome.. 🤣
+
+Bhagwan tum dono ki jodi hamesha salamat rakhe, tumhare rishte mein hamesha pyaar, bharosa aur muskurahat bani rahe. Tum hamesha isi tarah hansti-muskurati raho. Tumhari nayi zindagi dher saari khushiyon, success aur pyari yaadon se bhari rahe...
+
+Aur jiju ko meri taraf se advance mein Best of Luck..😆
+
+Enjoy your big day... Bahut saara pyaar aur dher saari shubhkamnayein.. 💐❤️
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Geeta Di (Bestfriend) 💫</h4>
+                </div>
+
+                <div class="bg-amber-50/60 p-6 rounded-2xl shadow-sm border border-amber-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Nainaa dii 🧸</h4>
+                </div>
+
+                <div class="bg-rose-50/50 p-6 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        "Sending you the warmest wishes for your grand wedding day, Dii! May your relationship with Jiju be filled with endless smiles and zero drama! Stay blessed always. ❤️"
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Shambhavi dii ❤️</h4>
+                </div>
+
+                <div class="bg-amber-50/50 p-6 rounded-2xl shadow-sm border border-amber-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        Happy Married Life, Samar's Didi! 💍💕
+
+                 May your new chapter in life be filled with lots of love, happiness and countless beautiful memories. Wishing you both a lifetime of togetherness and blessings 🌸
+
+                 Congrats! 🥂🎉
+
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">-Mikasa Di (Riaa)🌸</h4>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        Wish you the happiest marriage and may you start this new chapter of life with positivity and love. ❤️ Many many congratulations to you and your family on this auspicious beginning!! 🎊🎊
+
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Chaand Di (Noor) 🌙</h4>
+                </div>
+
+                <div class="bg-rose-50/50 p-6 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        Happy married life didi and jiju!! Congratulations on your wedding! Wishing you both a lifetime filled with endless love, laughter, trust, and happiness. May your journey together be blessed with beautiful memories, unwavering support for one another, and countless reasons to smile every day. As you begin this wonderful new chapter, may your bond grow stronger with each passing year. Wishing you both a joyful married life and a future filled with love, peace, and every blessing. Congratulations once again on your beautiful union!
+
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Mahii dii ⭐</h4>
+                </div>
+
+                <div class="bg-amber-50/50 p-6 rounded-2xl shadow-sm border border-amber-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        "REPLACE_THIS_TOMORROW: hana ka text yahan fill hoga kal subah."
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Nandani (Hana) 🎈</h4>
+                </div>
+
+                <div class="bg-white p-6 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        Wishing her a lifetime of happiness together, Congratulations and best wishes for a happy married life🫶🏻✨🎀
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Masha 🍂</h4>
+                </div>
+
+                <div class="bg-rose-50/50 p-6 rounded-2xl shadow-sm border border-rose-100 flex flex-col justify-between">
+                    <p class="text-gray-600 italic text-sm mb-4 leading-relaxed">
+                        Heylowww dii aka bhuchii! 🌸 (surprise surprise 🎁)
+Agr schh bolee toh camera k samne kyaa bolna h kch smjh nhi aa rhaa! 📹🤔 Itni bhaag-daaud chal rhii hh ki pura dimag blank ho rakha hh.... 🏃‍♂️💨 Isliye hum thodii der phle kchh baatein soch krr likh liyee hh taki hum kch bhul nah jaaye aur ache se bol paaye + maii yeh message bhi aapke gift mein add krr dunga tki aap phad paoo! 📝✨
+Tohh... 1st of all wish you a very happy married life ahead.... 🥂💍 I am so proud of the person you are, and I cannot wait to see the beautiful home you build touchwood 🧿..... Aaj aapki shaadi ho rahi hai aur sachi bolu toh abhi se ajeeb lag raha hai ki aapke bina is ghar mein mera kya hoga? 🤔 Mujhee ache dishes kon bnakr khilayega? 🍲 Mujhe bin btt k kon daatega? 😠 Mera rapido toh bnd ho jyega 😭🚗 But jokes apart dii... I'm gonna miss you so much 🩷✨🧿 and thank youh 🫡 for everything you have done for me so far! 💕😊
+Ummm.... agr kbhi maine ya mere words ne aapko hurt kiyaa hh toh uske liyee I'm really really sorry 🙏 (haa aapka khana kha leta hu uske liyee sorry nhi bol rhaa woh mera haq hh 😉). Remember one thing.... Kbhi bhi aapki life mein koii bhi problem ho or you need any help, anything.... Your Lil bro who is no more little is there for you... Just one call! 📞💪 Ig ab iske bdd mai aur zydaa bol nhi paungaa aur smjh bhi nhi aa rha 😅
+Yehh merii taraf se ek chota sa gift merii pretty sister k liye (don't take that compliment seriously sirf video k liyee bolaa hh 😂) hope you'll like it and pray future mein isse ache ache gifts du mai (nd one last thing return gift mein ps5 ya 10k cash mil jaata tohh hehehe 🎮💸).
+Hasta la vista, adios! 👋 (it's a goat language you'll not understand 🐐😉)
+                    </p>
+                    <h4 class="font-semibold text-rose-800 text-right">- Samarveer Singh 🩷</h4>
+                </div>
+
             </div>
         </section>
 
@@ -146,31 +332,46 @@
     <!-- INTERACTIVE JAVASCRIPT -->
     <script>
         function unlockMemories() {
-            // Play background music when button is clicked
-            const music = document.getElementById('bg-music');
-            music.play().catch(e => console.log("Music auto-play blocked by browser policy until interaction."));
+            // Hard Audio Force Execution
+            var music = document.getElementById('bg-music');
+            if(music) {
+                music.play().catch(function(e) { console.log("Audio play deferred"); });
+            }
 
-            const content = document.getElementById('main-content');
-            content.classList.remove('hidden');
-            setTimeout(() => {
-                content.classList.remove('opacity-0');
-                content.github.io
-                content.classList.add('opacity-100');
-            }, 50);
-            window.scrollTo({ top: window.innerHeight, behavior: 'smooth' });
+            // Force Display Overrides (Spck Editor Layout Fixes)
+            var content = document.getElementById('main-content');
+            if(content) {
+                content.style.display = "block"; 
+                
+                // Pure CSS state manipulation bypassing Tailwind dynamic loading lock
+                setTimeout(function() {
+                    window.scrollTo({
+                        top: window.innerHeight,
+                        behavior: 'smooth'
+                    });
+                }, 50);
+            }
+        }
+
+        function toggleFlip(cardContainer) {
+            if(cardContainer) {
+                cardContainer.classList.toggle('rotate-y-180');
+            }
         }
 
         function checkAnswer(isCorrect, element) {
-            const resultMsg = document.getElementById('quiz-result');
+            var resultMsg = document.getElementById('quiz-result');
+            if(!resultMsg) return;
+            
             resultMsg.classList.remove('hidden');
             if (isCorrect) {
-                element.classList.add('bg-green-100', 'border-green-400', 'text-green-800');
+                element.className = "w-full text-left p-3 border border-green-400 rounded-xl bg-green-100 text-green-800 transition font-medium";
                 resultMsg.innerText = "🎉 ABSOLUTELY CORRECT! Sabse bada sach yahi tha!";
-                resultMsg.className = "mt-4 text-center font-medium text-green-600";
+                resultMsg.style.color = "#16a34a";
             } else {
-                element.classList.add('bg-red-100', 'border-red-400', 'text-red-800');
+                element.className = "w-full text-left p-3 border border-red-400 rounded-xl bg-red-100 text-red-800 transition font-medium";
                 resultMsg.innerText = "❌ Wrong! Lagta hai badla lena padega!";
-                resultMsg.className = "mt-4 text-center font-medium text-red-500";
+                resultMsg.style.color = "#dc2626";
             }
         }
     </script>
